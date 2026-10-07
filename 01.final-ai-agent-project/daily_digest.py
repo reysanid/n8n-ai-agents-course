@@ -3,7 +3,7 @@ import requests
 import schedule
 import time
 
-TELEGRAM_TOKEN = "8540300047:AAHR31mObBZ5lXz-KFMZRuH8Xks9CTBtdvc"
+TELEGRAM_TOKEN = "YOUR_TOKEN_HERE"
 CHAT_ID = "Id: 126233537"
 OLLAMA_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "llama3"
