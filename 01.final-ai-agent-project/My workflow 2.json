@@ -1,0 +1,132 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "hour": 10
+            }
+          ]
+        },
+        "feedUrl": "https://www.designboom.com/feed/"
+      },
+      "type": "n8n-nodes-base.rssFeedReadTrigger",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "da6cb475-9d68-4c45-a58b-f74030a40285",
+      "name": "RSS Feed Trigger"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=مهم: خروجی باید فقط و فقط به زبان فارسی باشد حتی اگر متن ورودی انگلیسی است.\nاین خبر رو در یک پاراگراف کوتاه (حداکثر 3 جمله) به فارسی خلاصه کن. فقط خلاصه رو بنویس، بدون مقدمه یا توضیح اضافه و بدون هیچ کلمه انگلیسی \n\nعنوان: {{ $json.title }}\nمتن: {{ \n$json[\"content:encodedSnippet\"] }}\n\nخلاصه فارسی (یک پاراگراف کوتاه):",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        432,
+        0
+      ],
+      "id": "b32afb97-d69f-496e-b428-9e549a9d3bee",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        368,
+        208
+      ],
+      "id": "d09e4aeb-8cd4-44ec-b29c-384053551ebf",
+      "name": "Ollama Chat Model1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "CmbIuVnFVjXxi6J0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "126233537",
+        "text": "={{ $json.text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        704,
+        144
+      ],
+      "id": "c423b74d-8c91-4330-8116-6a31018ca0a7",
+      "name": "Send a text message",
+      "webhookId": "dda07d1a-3aa9-44b6-aff6-11efacd23774",
+      "credentials": {
+        "telegramApi": {
+          "id": "zTpsYMDro2T30Ly8",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RSS Feed Trigger": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5d2ede5f-3a1d-4424-a702-e2d8fccd08c1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "055e5dd7831525040ae1e84ea40dd4af3073b6cac4d7bce3e22f636b2f65e348"
+  },
+  "nodeGroups": [],
+  "id": "99blCWzYNmxx0iVS",
+  "tags": []
+}
