@@ -33,3 +33,19 @@ This was my first time working with `n8n` nodes and building a real AI Agent, an
 ## What I learned
 
 Working with `n8n`, especially with AI Agents and vector stores, requires attention at three levels at once: the visual connections on the canvas, each node's internal settings (like Memory Key), and the exact syntax of every expression — because one small mistake (a misplaced character, a missing connection line) can break the entire chain without necessarily throwing a visible error.
+## Screenshots
+
+### Workflow overview
+Both branches of the workflow in n8n: ingestion (top) and retrieval (bottom).
+
+![Workflow overview](n8n.jpg)
+
+### Question form
+The form where the user enters a question (in Persian).
+
+![Question form](semantic-1.jpg)
+
+### Result
+The `Edit Fields` node extracts the matching answer from the vector store metadata.
+
+![Answer output](Semantic-2.jpg)
