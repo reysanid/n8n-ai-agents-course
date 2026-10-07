@@ -1,0 +1,305 @@
+{
+  "name": "FAQ Semantic Search",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a5625013-d58a-4f02-a2f2-74bf7bf941c5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/files/faq.csv",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "36ef8291-9f0c-422d-9865-f4a40e6dc5c2",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        368,
+        48
+      ],
+      "id": "1af897e3-8965-4bdf-a2c4-274252075803",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "faq_store",
+          "mode": "list"
+        },
+        "clearStore": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        592,
+        48
+      ],
+      "id": "647397e6-6d81-43cb-91da-561a3e4e40b3",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        640,
+        256
+      ],
+      "id": "ada6aa6c-3502-4cfa-a62a-5f8e625f7eff",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "CmbIuVnFVjXxi6J0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "answer",
+                "value": "={{ $json.answer }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        816,
+        304
+      ],
+      "id": "1a1c6182-59f6-4b80-9fb6-50ea9dadbeb1",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "load",
+        "memoryKey": {
+          "__rl": true,
+          "value": "faq_store",
+          "mode": "list",
+          "cachedResultName": "faq_store"
+        },
+        "prompt": "={{ $json.question }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        240
+      ],
+      "id": "ce3feafc-5807-4b63-a2d4-7b1c4e7e08c0",
+      "name": "Simple Vector Store1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "63948418-fa17-4ce6-8974-084bdff1c146",
+              "name": "answer",
+              "value": "={{ $json.document.metadata.answer }}",
+              "type": "string"
+            },
+            {
+              "id": "a6adc917-9e64-4bda-87e3-c615c5d09db4",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        640,
+        464
+      ],
+      "id": "609b4c81-4f62-4c45-87f9-f8f408d8d553",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        416,
+        448
+      ],
+      "id": "4ac991e1-14e2-42aa-98ca-3941205d7980",
+      "name": "Embeddings Ollama1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "CmbIuVnFVjXxi6J0",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "FAQ",
+        "formDescription": "لطفا سوال خود را وارد کنید.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "لطفا سوال خود را وارد کنید.",
+              "fieldName": "question"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -48,
+        368
+      ],
+      "id": "33d502ec-83ed-4104-87c9-61306c21c002",
+      "name": "On form submission",
+      "webhookId": "1275287a-d1be-412b-bbe2-30f4ba8e6c58"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    },
+    "Embeddings Ollama1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "49bccd5e-d471-488c-8bb1-81a6a597dd19",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "055e5dd7831525040ae1e84ea40dd4af3073b6cac4d7bce3e22f636b2f65e348"
+  },
+  "nodeGroups": [],
+  "id": "68ZLYPRfxUSO2LKp",
+  "tags": []
+}
