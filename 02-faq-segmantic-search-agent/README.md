@@ -48,4 +48,4 @@ The form where the user enters a question (in Persian).
 ### Result
 The `Edit Fields` node extracts the matching answer from the vector store metadata.
 
-![Answer output](Semantic-2.jpg)
+![Answer output](semantic-2.jpg)
