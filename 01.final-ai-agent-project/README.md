@@ -41,4 +41,9 @@ The system runs without any external API. The workflow is published and active.
 
 ## Screenshots
 
-(to be added)
+### Workflow overview
+![Workflow overview](n8n-workflow.jpg)
+
+### Telegram messages
+![Telegram message 1](telegram-message-1.jpg)
+![Telegram message 2](telegram-message-2.jpg)
