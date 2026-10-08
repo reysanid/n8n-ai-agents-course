@@ -37,9 +37,11 @@ I used an AI assistant to help with the problems below.
 ### Code
 The main function and the `Gradio` interface definition.
 
-![Code](code.jpg)
+![Code 1](code-1.jpg)
+![Code 2](code-2.jpg)
 
 ### Output
 The app summarizing a sample text.
 
-![Summary output](summary-output.jpg)
+![Summary output 1](summary-output1.jpg)
+![Summary output 2](summary-output2.jpg)
