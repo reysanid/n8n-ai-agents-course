@@ -1,3 +1,8 @@
+
+Reyhaneh Sanei <reysanid@gmail.com>
+10:59 AM (8 minutes ago)
+to poonapashootan7
+
 # Gradio AI Summarizer
 
 An interactive `Gradio` app that summarizes user text by calling an AI model through the `OpenRouter` API.
@@ -16,20 +21,25 @@ The API key is entered at runtime through a `password` field, so it is not store
 - `Python`, `Gradio`, `requests`
 - `OpenRouter` (OpenAI-compatible endpoint)
 - Written and run in VS Code, exported as `.ipynb`
-
-## Why VS Code instead of Colab
+- ## Why VS Code instead of Colab
 
 I started this exercise with the plan of using Google Colab, but my VPN connection dropped during the work and Colab was not reachable. I switched to VS Code. The output is still a standard `.ipynb` notebook.
 
 ## Challenges
+
 I used an AI assistant to help with the problems below.
 
 - **`!pip` vs `%pip`:** `!pip` sometimes gave a "not recognized" error in the notebook. Using `%pip` fixed it. I applied the fix without fully understanding the reason at the time.
 - **Typos and indentation:** I had typos in `Gradio` parameter names (`inputs` / `outputs`) and in the JSON keys of the API response (`choices`, `messages`), plus an indentation error in the function definition. The app did not run until these were fixed.
 - **Invalid model name:** the first model name was not valid on `OpenRouter`. Switching to a valid free model solved the error.
+- ## Screenshots
 
-Screenshots of these errors are below.
+### Code
+The main function and the `Gradio` interface definition.
 
-## Screenshots
+![Code](code.jpg)
 
-(to be added)
+### Output
+The app summarizing a sample text.
+
+![Summary output](summary-output.jpg)
