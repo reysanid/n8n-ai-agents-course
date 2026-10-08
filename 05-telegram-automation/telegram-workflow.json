@@ -1,0 +1,65 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e47ee3f8-912f-425c-ae91-45c14e18d179",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "chatId": "126233537",
+        "text": "سلام! این پیام به صورت خودکار از n8n فرستاده شده",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ff3dadbb-9aa4-4a71-83de-7cb80bf8a1d7",
+      "name": "Send a text message",
+      "webhookId": "bc74f8b7-42ef-49c9-b750-3da44e1f3db9",
+      "credentials": {
+        "telegramApi": {
+          "id": "zTpsYMDro2T30Ly8",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ddcc00c7-9c98-42ff-b1da-eaf6f2fcf064",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "055e5dd7831525040ae1e84ea40dd4af3073b6cac4d7bce3e22f636b2f65e348"
+  },
+  "nodeGroups": [],
+  "id": "VpS73J0cjn5gzqwS",
+  "tags": []
+}
